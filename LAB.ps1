@@ -3,11 +3,11 @@
 # Running parts of the script will not invoke this built-in variable
 
 #Create Hyper-V Switch
-$VSWITCHNAME = "SCCM-LAB"
+$VSWITCHNAME = "LAB"
 New-VMSwitch -Name "$VSWITCHNAME" -SwitchType Private 
 
 #Create Virtual Machines
-$VMNAME = "LAB-DC"
+$VMNAME = "LAB-VM01"
 New-VM `
 -Name "$VMNAME"`
 -VHDPath "$PSScriptRoot\$VMNAME\Virtual Hard Disks\$VMNAME.vhdx"`
@@ -20,7 +20,7 @@ Set-VMProcessor -VMName $VMNAME -Count 4
 Set-VM $VMNAME -SmartPagingFilePath "$PSScriptRoot\$VMNAME\"
 Set-VM -Name $VMNAME -AutomaticCheckpointsEnabled $false
 
-$VMNAME = "LAB-SCCM"
+$VMNAME = "LAB-VM02"
 New-VM `
 -Name "$VMNAME"`
 -VHDPath "$PSScriptRoot\$VMNAME\Virtual Hard Disks\$VMNAME.vhdx"`
@@ -33,7 +33,7 @@ Set-VMProcessor -VMName $VMNAME -Count 4
 Set-VM $VMNAME -SmartPagingFilePath "$PSScriptRoot\$VMNAME\"
 Set-VM -Name $VMNAME -AutomaticCheckpointsEnabled $false
 
-$VMNAME = "LAB-CLIENT"
+$VMNAME = "LAB-VM03"
 New-VM `
 -Name "$VMNAME"`
 -VHDPath "$PSScriptRoot\$VMNAME\Virtual Hard Disks\$VMNAME.vhdx"`
@@ -45,7 +45,3 @@ New-VM `
 Set-VMProcessor -VMName $VMNAME -Count 2
 Set-VM $VMNAME -SmartPagingFilePath "$PSScriptRoot\$VMNAME\"
 Set-VM -Name $VMNAME -AutomaticCheckpointsEnabled $false
-
-
-#Use below command to change vnet of nic from that used during creation
-#Connect-VMNetworkAdapter -VMName $VMNAME -SwitchName $VSWITCHNAME
